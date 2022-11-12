@@ -15,6 +15,13 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+
+    <!-- GeoJSON -->
+
+    <script src="databandung/Faskes_Bandung.geojson"></script>
+    <script src="databandung/Admin_Bandung.geojson"></script>
+    <script src="databandung/Jalan_Bandung.geojson"></script>
+
     <style>
       html,
       body,
@@ -84,7 +91,7 @@
           </div>
           <div class="modal-body">
             <p>Website Peta Lokasi merupakan website yang dibuat dengan menggunakan CodeIgneter 4 dan database PostgresSQL</p>
-            <p>Dibuat Oleh Fakhri Qaiarawan</p>
+            <p>Dibuat Oleh Rizal Wahyudi</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -94,13 +101,37 @@
     </div>
     <script>
       /* Initial Map */
-      var map = L.map("map").setView([-6.914348931907134, 107.61671633452833], 10);
+      var map = L.map("map").setView([-6.924916376958056, 107.63766144889487], 12);
 
       /* Tile Basemap */
       var basemap = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://www.unsorry.net" target="_blank">unsorry@2022</a>',
       });
       basemap.addTo(map);
+
+      // ADD DATA Titik Fasilitas Kesehatan
+      var layer_Faskes;
+
+      layer_Faskes = L.geoJson(faskes_bandung, {
+        pointToLayer: function (feature, latlng) {
+          return L.marker(latlng);
+            },
+          }).addTo(map);
+
+      // ADD DATA Jaringan Jalan
+      var layer_Jalan;
+
+      layer_Jalan = L.geoJson(jalan_bandung, {
+        pointToLayer: function (feature, latlng) {
+          return L.marker(latlng);
+            },
+          }).addTo(map);
+
+      // ADD DATA Polygon Batas Admin
+      var layer_Admin;
+
+      layer_Admin = L.geoJson(admin_bandung, {}).addTo(map);
+
     </script>
   </body>
 </html>
